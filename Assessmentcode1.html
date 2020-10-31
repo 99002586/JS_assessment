@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customer Application Page</title>
+    <script src="CommonFunctions.js"></script>  
+    <style>
+        body{
+            font-size: 16px;
+            background-color: lightblue;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        h1{
+          text-align: center;
+          text-decoration: underline;  
+        }
+
+        form{
+            width : 500px;
+            padding : 15px;
+            border : 2px solid brown;
+            margin: 50px auto 0;
+            border-radius: 10px;  
+        }
+
+        label{
+            display:block;
+            margin-bottom: 5px;
+        }
+
+        input, select{
+            border:1px burlywood;
+            padding:10px;
+            display:block;
+            width:95%;
+            border-radius: 2px;
+        }
+        input.inline{
+            display:inline-block;
+            width: auto;
+            padding-right: 15px;
+        }
+        .row{
+            padding-bottom: 15px;
+        }
+        .err{
+            font-size:0.8em;
+            color :darkred;
+        }
+        button{
+            display:block;
+            width:95%;
+            height: 50px;
+            border-color:blue;
+            background-color:lightskyblue;
+            margin-top: 15px;
+            box-shadow: 0 3px 4px blue;
+        }
+    </style>
+    <script>
+        function showErr(ele, msg){
+            $get(ele).innerText = msg;
+        }
+        function validate(){
+            //get all the values....
+            let name = document.regForm.name.value;
+            let email = document.regForm.email.value;
+            let mobile = document.regForm.phone.value;
+            let date = document.regForm.Date.value;
+            let amt = document.regForm.Amount.value;
+                      
+            //name validation
+            if(name == "" || name == null){
+                showErr("errName", "Name is mandatory")
+                return false;
+            }else{
+                showErr("errName", "")
+            }
+            //email validation    
+            if(email == ""){
+                showErr("errEmail", "Email is mandatory")
+                return false;
+            }else{
+                showErr("errEmail", "")
+            }
+            let regEx = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+            if(regEx.test(email) == false){
+                showErr("errEmail", "Email is not in a valid format")
+                return false;
+            } else {
+                showErr("errEmail", "")
+            }
+            //phone no validation
+            let regEx = new RegExp("/^[1-9]\d{10}$/");
+            if(mobile == "" || (!regEx.test(mobile)))
+                return false;
+            //bill date validation
+            if(date == ""){
+                showErr("errDate", "Enter the Bill date ")
+                return false;
+            }else{
+                showErr("errDate", "")
+            }
+            let regEx = new RegExp("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$");
+            if(regEx.test(Date) == false){
+                showErr("errDate", "Enter a valid date(in dd-mm-yyyy format)")
+                return false;
+            } else {
+                showErr("errDate", "")
+            }
+
+            //bill amount validation
+            if(amt == "" || amt == null){
+                showErr("err", "Bill amount is mandatory")
+                return false;
+            }else{
+                showErr("errAmount", "")
+            }
+
+
+                           //After all the validations are done successfully
+        }
+    </script>
+</head>
+<body>
+    <form action="" name="regForm" novalidate="true" onsubmit="return validate()">
+        <h1>Customer Application Form</h1>
+        <div class="row">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name"/>
+            <div id="errName" class="err"></div>
+        </div>
+        <div class="row">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" />
+            <div id="errEmail" class="err"></div>
+        </div>
+        <div class="row">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" />
+        </div>
+        <div class="row">
+            <label for="Date">Billing Date</label>
+            <input type="text" id="Date" name="billdate" />
+            <div id="errDate" class="err"></div>   
+           
+        </div>
+        <div class="row">
+            <label for="Amount">Billing Amount</label>
+            <input type="text" id="Amount" name="billamount" />
+            <div id="errAmount" class="err"></div> 
+        </div>
+        
+        <button>Register</button>
+    </form>
+</body>
+</html>
